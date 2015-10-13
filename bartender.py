@@ -1,93 +1,109 @@
-'''
-This program takes the y/n input for strong/salty/bitter/sweet/fruity
+"""This program takes the y/n input for strong/salty/bitter/sweet/fruity
 and picks the random ingredients for each added flavor and makes 
 the drink
-'''
 
+Constants:
+    QUESTIONS (dict): --
+    INGREDIENTS (dict): --
 
+"""
 
 import random
 
-questions = {
-    "strong": "Do ye like yer drinks strong?",
-    "salty": "Do ye like it with a salty tang?",
-    "bitter": "Are ye a lubber who likes it bitter?",
-    "sweet": "Would ye like a bit of sweetness with yer poison?",
-    "fruity": "Are ye one for a fruity finish?"
-     }
 
-ingredients = {
-    "strong":["glug of rum", "slug of whisky", "splash of gin"],
-    "salty":["olive on a stick", "salt-dusted rim", "rasher of bacon"],
-    "bitter":["shake of bitters", "splash of tonic", "twist of lemon peel"],
-    "sweet":["sugar cube", "spoonful of honey","spash of cola"],
-    "fruity":["slice of orange","dash of cassis","cherry on top"]
-      }
+# CONSTANTS
+QUESTIONS = {
+             "strong": "Do ye like yer drinks strong?",
+             "salty": "Do ye like it with a salty tang?",
+             "bitter": "Are ye a lubber who likes it bitter?",
+             "sweet": "Would ye like a bit of sweetness with yer poison?",
+             "fruity": "Are ye one for a fruity finish?"
+            }
+INGREDIENTS = {
+               "strong": ["glug of rum", "slug of whisky", "splash of gin"],
+               "salty": ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
+               "bitter": ["shake of bitters", "splash of tonic", "twist of lemon peel"],
+               "sweet": ["sugar cube", "spoonful of honey","spash of cola"],
+               "fruity": ["slice of orange","dash of cassis","cherry on top"]
+              }
+
 
 def drink_ingredients():
-    drink_ingrd = {}
-    print ('Enter "Y" or "Yes" or "N" or "No"')
-    strongip = raw_input('strong').lower()
-    #print strongip
-    if strongip == ('y' or 'yes'):
-       drink_ingrd["strong"] = True
-    else:
-        drink_ingrd["strong"] = False
-    
+    """A quick summary on this function.
 
-    #print drink_ingrd
-    saltyip = raw_input('salty').lower()
-    if saltyip == ('y' or 'yes'):
-         drink_ingrd['salty'] = True
-    else:
-         drink_ingrd['salty'] = False
+    Returns:
+        dict: A dictionary of an ingredient adjective (from the
+            INRGREDIENTS constant) mapped to a yes/no boolean
+            representing if the user likes it or not! Example:
 
+            >>> {'salty': False, 'strong': True, 'bitter': True, ...}
 
-    bitterip = raw_input('bitter').lower()
-    if bitterip == ('y' or 'yes'):
-         drink_ingrd['bitter'] = True
-    else:
-         drink_ingrd['bitter'] = False
+    See Also:
+        INGREDIENTS: the ingredients constant in this module.
+        QUESTIONS: --
 
+    """
 
-    sweetip = raw_input('sweet').lower()
-    if sweetip == ('y' or 'yes'):
-         drink_ingrd['sweet'] = True
-    else:
-          drink_ingrd['sweet'] = False
-    #print drink_ingrd
-     
-    fruityip = raw_input('fruity').lower()
-    if fruityip == ('y' or 'yes'):
-         drink_ingrd['fruity'] = True
-    else:
-         drink_ingrd['fruity'] = False
-    print drink_ingrd
-    return drink_ingrd
+    # The ingredients dictionary will be a key>value mapping of
+    # the type of ingredient (key) from INGREDIENTS to a true/false
+    # boolean value.
+    liked_ingredients = {}
+    print("Enter Y or YES; N or NO")
+
+    for ingredient_adjective, question in QUESTIONS.items():
+
+        # This loop is for making sure the user supplies a yes or
+        # no answer!
+        while True:
+            user_input = raw_input(question + ' ').lower()
+
+            if user_input in ('y', 'yes'):
+                user_likes_ingredient = True
+                break
+            elif user_input in ('n', 'no'):
+                user_likes_ingredient = False
+                break
+
+        # finally, add the True/False for liking the ingredient to the
+        # liked ingredients dictionary
+        liked_ingredients[ingredient_adjective] = user_likes_ingredient
+        
+    return liked_ingredients
 
 
 def make_drink(preference):
+    """A summary of what this function does.
+
+    Args:
+        preference (dict): Maps an "ingredient adjective" (a key
+            from the INGREDIENTS constant) to a yes/no boolean
+            value designating preference.
+
+    Returns:
+        dict: Mapping of ingredient adject from INGREDIENTS (key)
+            to a randomly select descriptive
+            word from INGREDIENTS (value).
+
+    See Also:
+        drink_ingredients(): The return value of this function
+            is used to supply "preference" to this function.
+
+    """
+
     drink = {}
-    if preference['strong'] == True:
-        drink['strong'] = (random.choice(ingredients['strong']))
-    if preference['salty'] == True:
-        drink['salty'] = (random.choice(ingredients['salty']))
-    if preference['bitter'] == True:
-        drink['bitter'] = (random.choice(ingredients['bitter']))
-    if preference['sweet'] == True:
-            drink['sweet'] = (random.choice(ingredients['sweet']))
-    if preference['fruity'] == True:
-            drink['fruity'] = (random.choice(ingredients['fruity']))
-    #print(drink)
+
+    for ingredient_adjective in INGREDIENTS:
+
+        if preference[ingredient_adjective]:
+            ingredient_descriptions = INGREDIENTS[ingredient_adjective]
+            drink[ingredient_adjective] = random.choice(ingredient_descriptions)
+
     return drink
+
 
 if __name__ == '__main__':
       choices = {}
       got_drink = {}
       choices = drink_ingredients()
-      #print choices
       got_drink = make_drink(choices)
       print(got_drink)
-
-
-
