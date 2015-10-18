@@ -1,3 +1,11 @@
+"Home work assignments:
+
+  * Read PEP8 guidelines
+  * variables_like_this not notLikeThis
+  * Docstrings!
+
+"""
+
 import random
 
 
@@ -19,7 +27,7 @@ INGREDIENTS = {
 
 
 def getmychoice():
-	print 'type y/yes or n/No'
+	print('type y/yes or n/No')
 	mychoice = {}
 	for taste, question in QUESTIONS.items():
         	customerInput = raw_input(question + ' ') 
@@ -35,20 +43,18 @@ def getmychoice():
 def getMyDrinkIngredients(preferenceInput):
 	drinkIngredients = {}
 	ingredientInput = ()
+
 	for taste in INGREDIENTS:
 		if preferenceInput[taste]:
 			ingredientInput = INGREDIENTS[taste]
                 	drinkIngredients[taste] = random.choice(ingredientInput)
+
         print drinkIngredients
+
 	return drinkIngredients
-
-
-
 
 
 if __name__ == '__main__':
     getTasteChoice = {}
     getDrinkIngredients = {}
     getTasteChoice = getmychoice()
-    getDrinkIngredients = getMyDrinkIngredients(getTasteChoice)
-    print getDrinkIngredients
